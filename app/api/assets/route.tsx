@@ -11,5 +11,6 @@ export async function GET(request: NextRequest) {
         },
     });
 
+    // Yhe data comes as object from coin market, why we return the data array here.
     return NextResponse.json(response.data.data);
 }

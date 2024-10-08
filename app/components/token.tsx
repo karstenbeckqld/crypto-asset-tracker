@@ -13,6 +13,7 @@ interface TokenProps {
     token: TokenData;
 }
 
+// Create a component that displays the coin data.
 const CoinToken = ({cmc_rank, name, price, percent_change_24h}: TokenData) => {
         return (
             <div className='flex p-5 bg-neutral-900 mb-5 text-slate-50'>

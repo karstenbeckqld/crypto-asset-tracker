@@ -11,11 +11,12 @@ const queryClient = new QueryClient();
 
 export default function Home() {
 
-
+    // Get the asset data from the backend API.
     const {data, error} = useTokens();
 
     console.log(data);
 
+    // If an error occurs, display the error message.
      if (error) {
         return <div>Error: {error.message}</div>;
     }
@@ -31,6 +32,7 @@ export default function Home() {
                     <div className='w-1/4'>24h Change</div>
                 </div>
 
+                {/*Display each asset (token) using the CoinToken component.*/}
                 {Array.isArray(data) ? (
                     data.map((token) => (
                         <CoinToken key={token.cmc_rank}
