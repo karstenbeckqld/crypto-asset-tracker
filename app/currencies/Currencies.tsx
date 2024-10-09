@@ -1,6 +1,6 @@
 'use client'; // Ensuring client-side rendering
 
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Input, Search2Icon, Spinner, TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import CoinToken from '@/app/components/token';
@@ -114,61 +114,59 @@ const Currencies = () => {
     const sortedTokens = sortData(filteredTokens, sort as string, order as 'asc' | 'desc');
 
     return (
-        <Suspense fallback={<Spinner />}>
-            <div>
-                {error && <div>Error: {error.message}</div>}
+        <div>
+            {error && <div>Error: {error.message}</div>}
 
-                {/* Header and search toggle */}
-                <div className='flex flex-row items-center w-full pl-6 h-10 pt-4 mb-3'>
-                    {showSearch ? displaySearchField(searchQuery, setSearchQuery) : displayHeader()}
-                    <button
-                        onClick={toggleDisplay}
-                        className={showSearch
-                            ? `order-first bg-[#1E1E1E] p-2.5 text-[#ffffff] mt-4`
-                            : `order-last bg-[#1E1E1E] p-2.5 text-[#ffffff] mt-4`}
-                    >
-                        <Search2Icon />
-                    </button>
-                </div>
-
-                {/* Sorting buttons */}
-                <div className='flex px-8 py-1 bg-[#1E1E1E] mb-2.5 text-[#ffffff]'>
-
-                    <button className='flex-none w-1/5 ml-0' onClick={() => handleSort('cmc_rank')}>
-                        # {displayArrow('cmc_rank', sort, order)}
-                    </button>
-                    <button className='w-1/4' onClick={() => handleSort('name')}>
-                        Name {displayArrow('name', sort, order)}
-                    </button>
-                    <button className='w-1/5' onClick={() => handleSort('price')}>
-                        Price {displayArrow('price', sort, order)}
-                    </button>
-                    <button className='w-1/4' onClick={() => handleSort('percent_change_24h')}>
-                        24h % {displayArrow('percent_change_24h', sort, order)}
-                    </button>
-
-                </div>
-
-                {/* Token list */}
-                <div className='token-list'>
-                    {sortedTokens.length > 0 ? (
-                        sortedTokens.map(token => (
-                            <CoinToken
-                                key={token.cmc_rank}
-                                cmc_rank={token.cmc_rank}
-                                name={token.name}
-                                price={token.quote.USD.price}
-                                percent_change_24h={token.quote.USD.percent_change_24h}
-                                symbol={token.symbol}
-                                market_cap_dominance={token.quote.USD.market_cap_dominance}
-                            />
-                        ))
-                    ) : (
-                        <p>No data available</p>
-                    )}
-                </div>
+            {/* Header and search toggle */}
+            <div className='flex flex-row items-center w-full pl-6 h-10 pt-4 mb-3'>
+                {showSearch ? displaySearchField(searchQuery, setSearchQuery) : displayHeader()}
+                <button
+                    onClick={toggleDisplay}
+                    className={showSearch
+                        ? `order-first bg-[#1E1E1E] p-2.5 text-[#ffffff] mt-4`
+                        : `order-last bg-[#1E1E1E] p-2.5 text-[#ffffff] mt-4`}
+                >
+                    <Search2Icon />
+                </button>
             </div>
-        </Suspense>
+
+            {/* Sorting buttons */}
+            <div className='flex px-8 py-1 bg-[#1E1E1E] mb-2.5 text-[#ffffff]'>
+
+                <button className='flex-none w-1/5 ml-0' onClick={() => handleSort('cmc_rank')}>
+                    # {displayArrow('cmc_rank', sort, order)}
+                </button>
+                <button className='w-1/4' onClick={() => handleSort('name')}>
+                    Name {displayArrow('name', sort, order)}
+                </button>
+                <button className='w-1/5' onClick={() => handleSort('price')}>
+                    Price {displayArrow('price', sort, order)}
+                </button>
+                <button className='w-1/4' onClick={() => handleSort('percent_change_24h')}>
+                    24h % {displayArrow('percent_change_24h', sort, order)}
+                </button>
+
+            </div>
+
+            {/* Token list */}
+            <div className='token-list'>
+                {sortedTokens.length > 0 ? (
+                    sortedTokens.map(token => (
+                        <CoinToken
+                            key={token.cmc_rank}
+                            cmc_rank={token.cmc_rank}
+                            name={token.name}
+                            price={token.quote.USD.price}
+                            percent_change_24h={token.quote.USD.percent_change_24h}
+                            symbol={token.symbol}
+                            market_cap_dominance={token.quote.USD.market_cap_dominance}
+                        />
+                    ))
+                ) : (
+                    <p>No data available</p>
+                )}
+            </div>
+        </div>
     );
 };
 
