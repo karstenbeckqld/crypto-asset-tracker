@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Input, Search2Icon, Spinner, TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
+import { CloseIcon, Input, Search2Icon, Spinner, TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import CoinToken from '@/app/components/token';
 import useTokens from '@/app/react-query/hooks/useTokens';
 import { TokenType } from "@/app/types/CryptoTypes";
@@ -33,12 +33,12 @@ function displaySearchField(searchQuery: string, setSearchQuery: (value: string)
     return (
         <div id='search' className='flex flex-row items-center w-full p-2.5 mt-2.5'>
             <Input
-                type='text'
-                color='white'
-                placeholder='Search by name or symbol...'
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-            />
+            type='text'
+            color='white'
+            placeholder='Search by name or symbol...'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+        />
         </div>
     );
 }
@@ -125,18 +125,18 @@ const Currencies = () => {
                     onClick={toggleDisplay}
                     className={showSearch
                         ? `order-first bg-[#1E1E1E] p-2.5 text-[#ffffff] mt-4`
-                        : `order-last bg-[#1E1E1E] p-2.5 text-[#ffffff] mt-4`}
+                        : `order-last bg-[#1E1E1E] p-2.5 text-[#ffffff] mt-4 mr-8`}
                 >
-                    <Search2Icon />
+                    {showSearch ? <CloseIcon /> : <Search2Icon />}
                 </button>
             </div>
 
-            {/* Sorting buttons */}
-            <ButtonList
-                sort={sort}
-                order={order}
-                handleSort={handleSort}
-                displayArrow={displayArrow}  />
+            {/* Sorting buttons */} <ButtonList
+            sort={sort}
+            order={order}
+            handleSort={handleSort}
+            displayArrow={displayArrow}
+        />
 
             {/* Token list */}
             <div className='token-list'>
