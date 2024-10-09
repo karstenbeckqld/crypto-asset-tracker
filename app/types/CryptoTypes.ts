@@ -41,7 +41,7 @@ export type CryptoData = {
 export type USDQuote = {
     price: number;
     percent_change_24h: number;
-    market_cap_dominance: number;
+    market_cap: number;
 }
 
 export type Quote2 = {

@@ -149,7 +149,7 @@ const Currencies = () => {
                             price={token.quote.USD.price}
                             percent_change_24h={token.quote.USD.percent_change_24h}
                             symbol={token.symbol}
-                            market_cap_dominance={token.quote.USD.market_cap_dominance}
+                            market_cap={token.quote.USD.market_cap}
                         />
                     ))
                 ) : (
