@@ -6,6 +6,7 @@ import { Input, Search2Icon, Spinner, TriangleDownIcon, TriangleUpIcon } from "@
 import CoinToken from '@/app/components/token';
 import useTokens from '@/app/react-query/hooks/useTokens';
 import { TokenType } from "@/app/types/CryptoTypes";
+import ButtonList from "@/app/components/ButtonList";
 
 // Function to display sorting arrow
 function displayArrow(sortKey: string, activeSort: string, order: string) {
@@ -131,22 +132,11 @@ const Currencies = () => {
             </div>
 
             {/* Sorting buttons */}
-            <div className='flex px-8 py-1 bg-[#1E1E1E] mb-2.5 text-[#ffffff]'>
-
-                <button className='flex-none w-1/5 ml-0' onClick={() => handleSort('cmc_rank')}>
-                    # {displayArrow('cmc_rank', sort, order)}
-                </button>
-                <button className='w-1/4' onClick={() => handleSort('name')}>
-                    Name {displayArrow('name', sort, order)}
-                </button>
-                <button className='w-1/5' onClick={() => handleSort('price')}>
-                    Price {displayArrow('price', sort, order)}
-                </button>
-                <button className='w-1/4' onClick={() => handleSort('percent_change_24h')}>
-                    24h % {displayArrow('percent_change_24h', sort, order)}
-                </button>
-
-            </div>
+            <ButtonList
+                sort={sort}
+                order={order}
+                handleSort={handleSort}
+                displayArrow={displayArrow}  />
 
             {/* Token list */}
             <div className='token-list'>
