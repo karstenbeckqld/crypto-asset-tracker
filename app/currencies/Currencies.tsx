@@ -1,8 +1,8 @@
-'use client'; // Ensure this is at the top to force client-side rendering
+'use client'; // Ensuring client-side rendering
 
 import { Suspense, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation'; // Client-side hooks
-import { Input, Spinner, Search2Icon, TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Input, Search2Icon, Spinner, TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import CoinToken from '@/app/components/token';
 import useTokens from '@/app/react-query/hooks/useTokens';
 import { TokenType } from "@/app/types/CryptoTypes";
@@ -46,7 +46,7 @@ const Currencies = () => {
     const [showSearch, setShowSearch] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [isClient, setIsClient] = useState(false); // Track if we're on the client side
-    const { data, error } = useTokens(); // Fetch tokens using a custom hook
+    const {data, error} = useTokens(); // Fetch tokens using a custom hook
     const router = useRouter();
 
     const searchParams = useSearchParams(); // Search params hook
@@ -62,7 +62,7 @@ const Currencies = () => {
         setIsClient(true);
     }, []);
 
-    // If we're not on the client, render a spinner (or nothing)
+    // If we're not on the client, render a spinner
     if (!isClient) {
         return <Spinner />;
     }
@@ -114,25 +114,26 @@ const Currencies = () => {
     const sortedTokens = sortData(filteredTokens, sort as string, order as 'asc' | 'desc');
 
     return (
-        <div>
-            {error && <div>Error: {error.message}</div>}
+        <Suspense fallback={<Spinner />}>
+            <div>
+                {error && <div>Error: {error.message}</div>}
 
-            {/* Header and search toggle */}
-            <div className='flex flex-row items-center w-full pl-6 h-10 pt-4 mb-3'>
-                {showSearch ? displaySearchField(searchQuery, setSearchQuery) : displayHeader()}
-                <button
-                    onClick={toggleDisplay}
-                    className={showSearch
-                        ? `order-first bg-[#1E1E1E] p-2.5 text-[#ffffff] mt-4`
-                        : `order-last bg-[#1E1E1E] p-2.5 text-[#ffffff] mt-4`}
-                >
-                    <Search2Icon />
-                </button>
-            </div>
+                {/* Header and search toggle */}
+                <div className='flex flex-row items-center w-full pl-6 h-10 pt-4 mb-3'>
+                    {showSearch ? displaySearchField(searchQuery, setSearchQuery) : displayHeader()}
+                    <button
+                        onClick={toggleDisplay}
+                        className={showSearch
+                            ? `order-first bg-[#1E1E1E] p-2.5 text-[#ffffff] mt-4`
+                            : `order-last bg-[#1E1E1E] p-2.5 text-[#ffffff] mt-4`}
+                    >
+                        <Search2Icon />
+                    </button>
+                </div>
 
-            {/* Sorting buttons */}
-            <div className='flex px-8 py-1 bg-[#1E1E1E] mb-2.5 text-[#ffffff]'>
-                <Suspense fallback={<Spinner />}>
+                {/* Sorting buttons */}
+                <div className='flex px-8 py-1 bg-[#1E1E1E] mb-2.5 text-[#ffffff]'>
+
                     <button className='flex-none w-1/5 ml-0' onClick={() => handleSort('cmc_rank')}>
                         # {displayArrow('cmc_rank', sort, order)}
                     </button>
@@ -145,28 +146,29 @@ const Currencies = () => {
                     <button className='w-1/4' onClick={() => handleSort('percent_change_24h')}>
                         24h % {displayArrow('percent_change_24h', sort, order)}
                     </button>
-                </Suspense>
-            </div>
 
-            {/* Token list */}
-            <div className='token-list'>
-                {sortedTokens.length > 0 ? (
-                    sortedTokens.map(token => (
-                        <CoinToken
-                            key={token.cmc_rank}
-                            cmc_rank={token.cmc_rank}
-                            name={token.name}
-                            price={token.quote.USD.price}
-                            percent_change_24h={token.quote.USD.percent_change_24h}
-                            symbol={token.symbol}
-                            market_cap_dominance={token.quote.USD.market_cap_dominance}
-                        />
-                    ))
-                ) : (
-                    <p>No data available</p>
-                )}
+                </div>
+
+                {/* Token list */}
+                <div className='token-list'>
+                    {sortedTokens.length > 0 ? (
+                        sortedTokens.map(token => (
+                            <CoinToken
+                                key={token.cmc_rank}
+                                cmc_rank={token.cmc_rank}
+                                name={token.name}
+                                price={token.quote.USD.price}
+                                percent_change_24h={token.quote.USD.percent_change_24h}
+                                symbol={token.symbol}
+                                market_cap_dominance={token.quote.USD.market_cap_dominance}
+                            />
+                        ))
+                    ) : (
+                        <p>No data available</p>
+                    )}
+                </div>
             </div>
-        </div>
+        </Suspense>
     );
 };
 
