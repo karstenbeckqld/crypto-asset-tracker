@@ -114,7 +114,7 @@ const Currencies = () => {
     const sortedTokens = sortData(filteredTokens, sort as string, order as 'asc' | 'desc');
 
     return (
-        <div>
+        <div className='max-w-5xl mx-auto'>
             {error && <div>Error: {error.message}</div>}
 
             {/* Header and search toggle */}
