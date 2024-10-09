@@ -2,18 +2,18 @@
 
 import { ChakraProvider } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import CurrenciesTable from "@/app/currencies/CurrenciesTable";
+import Currencies from "@/app/currencies/Currencies";
 
 const queryClient = new QueryClient();
 
-const Currencies = () => {
+const CurrenciesProvider = () => {
 
     return (
         <>
             <QueryClientProvider client={queryClient}>
                 <ChakraProvider>
                     <div className='bg-[#1E1E1E]'>
-                            <CurrenciesTable />
+                            <Currencies />
                     </div>
                 </ChakraProvider>
             </QueryClientProvider>
@@ -22,4 +22,4 @@ const Currencies = () => {
     );
 };
 
-export default Currencies;
+export default CurrenciesProvider;
