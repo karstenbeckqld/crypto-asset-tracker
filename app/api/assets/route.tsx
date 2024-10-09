@@ -1,13 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import axios from "axios";
 
 // Get the latest cryptocurrency data from the coin market API.
-export async function GET(request: NextRequest) {
+export async function GET() {
 
     // Make a get request to the coin market API using the API key as custom header.
-    const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest ', {
+    const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?sort=market_cap&sort_dir=desc&limit=25 ', {
         headers: {
-            'X-CMC_PRO_API_KEY': process.env.COIN_MARKET_API_KEY, // Put in.env file later.
+            'X-CMC_PRO_API_KEY': process.env.COIN_MARKET_API_KEY,
         },
     });
 

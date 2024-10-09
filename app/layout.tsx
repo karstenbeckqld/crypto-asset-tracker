@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
     return (
             <html lang="en">
-                <body>
+                <body className='bg-[#1E1E1E]'>
                     <RegisterQueryClientProvider>
                         {children}
                     </RegisterQueryClientProvider>
